@@ -134,6 +134,7 @@ class Prefs(context: Context) {
     fun putBool(k: String, v: Boolean) { p.edit().putBoolean(k, v).apply() }
 }
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun ArifApp(exportZip: (List<FileItem>) -> Unit, importZip: ((List<FileItem>) -> Unit) -> Unit) {
     val context = androidx.compose.ui.platform.LocalContext.current
