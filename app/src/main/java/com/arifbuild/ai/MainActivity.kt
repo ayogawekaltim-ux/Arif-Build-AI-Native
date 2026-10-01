@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -313,8 +314,11 @@ fun ArifApp(exportZip: (List<FileItem>) -> Unit, importZip: ((List<FileItem>) ->
                         if (apiKey.isBlank()) status = "Masukkan API Key di Settings."
                         else apiCall({
                             val json = openRouterGet(baseUrl, apiKey, "/models")
-                            parseModels(json)
-                        }) { models = it as List<RemoteModel>; status = "Model OpenRouter dimuat: ${models.size}" }
+                            json
+                        }) { json ->
+                            models = parseModels(json)
+                            status = "Model OpenRouter dimuat: ${models.size}"
+                        }
                     },
                     onPick = { selectedModel = it; prefs.put("model", it); status = "Model aktif: $it" }
                 )
